@@ -1,0 +1,101 @@
+@font-face {
+    font-family: "U8-Regular";
+    src:url("fonts/U8Trial-Regular.ttf")
+}
+
+@font-face {
+    font-family: "U8-Bold";
+    src:url("fonts/U8Trial-Bold.ttf")
+}
+@font-face {
+    font-family: "U8-Medium";
+    src:url("fonts/U8Trial-Medium.ttf")
+}
+
+body {
+    background-color: #062863;
+    font-size: 20px;
+    font-family: "U8-Regular";
+    margin:0;
+    box-sizing: border-box;
+ 
+}
+
+header {
+    text-align: left;
+    margin-top: -15px;
+}
+
+h4 {
+    margin:15px 0; 
+    font-size:24px; 
+    color:#083E9E;
+}
+
+.img-container {
+    margin:0px auto 35px auto;
+}
+
+.container {
+    padding-top:30px;
+    display: block;
+    text-align:center;
+   
+}
+
+input, select {
+    width: 100%;
+    border: 0px;
+    border-radius: .25rem;
+    box-sizing: border-box;
+    padding:16px;
+    margin: 12px 0px 40px 0px;
+    font-family: inherit;
+    font-size: .875rem;
+    height:55px;
+    background-color: #edf2f7;
+    color:#1a202c;
+}
+
+
+label {
+    display: block;
+    text-align: left;
+    font-size: 12px;
+    color: #4a5568;
+    font-weight: 600;
+}
+
+.form-container {
+    background-color: white;
+    max-width:373px;
+    border: 1px solid #ccc;
+    border-radius: 1.25rem 1.25rem 1.25rem 0;
+    padding: 35px;
+    margin:10px auto;
+    overflow: auto;
+}
+
+button {
+    display:block;
+    margin:15px auto;
+    padding: 1.25rem 30px ;
+    border: 1px solid blue;
+    border-radius: .75rem .75rem .75rem 0;
+    color: white;
+    background-color: rgb(8, 62, 158);
+    cursor: pointer;
+    font-family: "U8-medium";
+    width: 100%;
+    font-size: .875rem;
+}
+
+button:hover{
+    background-color: darkblue;
+    color:white;
+    transition: ease 0.7s;
+}
+.clips {
+    list-style: none;
+    text-align: left;
+}

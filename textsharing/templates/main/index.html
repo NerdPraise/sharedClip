@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<html>
+    
+<head>
+    <title>{% block title %} Shared Clipboard | To do List{% endblock %}</title>
+    <meta >
+    <link>
+</head>
+
+<body>
+    <h1>Hello World </h1>
+    {% if profile%}
+    <h3>Welcome, {{name}} {{profile.email}}</h3>
+    <button onclick="location.href='{%url 'logout'%}'"> Logout</button>
+    <form action="create" method="post">
+        {%csrf_token%}
+        <textarea rows="20" cols="50" name="clip">{{sometext}}</textarea>
+        <input type="submit" value="Save">
+    </form>
+    {%for date, clips in content%}
+    <p>Date :{{date}} &nbsp; Clip: {{clips}}</p>
+    {%endfor%}
+
+
+
+    {% else %}
+    <button onclick="location.href='{%url 'signup'%}'"> Signup</button>
+    <button onclick="location.href='{%url 'login'%}'"> Login</button>
+    {%endif%}
+    </body>
+</html>
+{% endblock content %}
