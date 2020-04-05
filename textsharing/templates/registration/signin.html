@@ -1,13 +1,31 @@
+{% extends "base.html"%}
+{%load static%}
+{%block content%}
+
+
 <body>
-    {% if message %}
-    <p>{{message}}</p>
-    {% endif %}
-    <form action="postsign" method="post">
-        {%csrf_token%}
-        Email:
-        <input type="email" name="email"><br>
-        Password:
-        <input type="password" name="password">
-        <input type="submit">
-    </form>
+    <div class="container">
+        <div class="siteimage img-container textandstuff">
+            <!-- <img alt="sharedClipboard" width="200px" src="{% static 'images/sharedclip.png' %}"> -->
+            <h2 style="margin-top:-23px; font-size: 22px;">sharedClip</h2>
+        </div>
+        <div class="form-container">
+            <header>
+                <h4>Sign in</h4>
+            </header>
+            {%if message%}
+            <p style="font-size: 14px; color:red;">{{message}}</p>
+            {%endif%}
+            <form action="postsign" method="post">
+                {%csrf_token%}
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email"><br>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password">
+                <button class="button" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
 </body>
+{%endblock content%}

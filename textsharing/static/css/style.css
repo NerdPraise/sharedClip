@@ -1,20 +1,17 @@
 @font-face {
     font-family: "U8-Regular";
-    src:url("fonts/U8Trial-Regular.ttf")
+    src:url("../fonts/U8Trial-Regular.ttf")
 }
 
 @font-face {
-    font-family: "U8-Bold";
-    src:url("fonts/U8Trial-Bold.ttf")
-}
-@font-face {
     font-family: "U8-Medium";
-    src:url("fonts/U8Trial-Medium.ttf")
+    src:url("../fonts/U8Trial-Medium.ttf")
 }
 
 body {
+    color:white;
     background-color: #062863;
-    font-size: 20px;
+    font-size: 18px;
     font-family: "U8-Regular";
     margin:0;
     box-sizing: border-box;
@@ -76,7 +73,7 @@ label {
     overflow: auto;
 }
 
-button {
+.button {
     display:block;
     margin:15px auto;
     padding: 1.25rem 30px ;
@@ -98,4 +95,5 @@ button:hover{
 .clips {
     list-style: none;
     text-align: left;
+    color:black;
 }

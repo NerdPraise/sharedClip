@@ -1,34 +1,47 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+
 <html>
-    
+
 <head>
     <title>{% block title %} Shared Clipboard | To do List{% endblock %}</title>
-    <meta >
-    <link>
 </head>
 
 <body>
-    <h1>Hello World </h1>
     {% if profile%}
-    <h3>Welcome, {{name}} {{profile.email}}</h3>
+    <div class="container">
+        <div class="siteimage img-container textandstuff">
+            <!-- <img alt="sharedClipboard" width="200px" src="{% static 'images/sharedclip.png' %}"> -->
+            <h2 style="margin-top:-23px; font-size: 22px;">sharedClip</h2>
+        </div>
+        <div class="form-container">
+            <header>
+                <h4>Good day, {{name}} {{profile.email}}</h4>
+            </header>
+            <div>
+                <form action="create" method="POST">
+                    {%csrf_token%}
+                    <textarea rows="10" cols="50" placeholder="{ Enter clip }"></textarea>
+                    <button class="button" type="submit">SAVE</button>
+                </form>
+                <ul class="clips">
+                    {%for date, clip in content%}
+                    <li>{{date}}: {{clip}} </li>
+                    {%endfor%}
+                </ul>
+            </div>
+        </div>
+    </div>
     <button onclick="location.href='{%url 'logout'%}'"> Logout</button>
-    <form action="create" method="post">
-        {%csrf_token%}
-        <textarea rows="20" cols="50" name="clip">{{sometext}}</textarea>
-        <input type="submit" value="Save">
-    </form>
-    {%for date, clips in content%}
-    <p>Date :{{date}} &nbsp; Clip: {{clips}}</p>
-    {%endfor%}
-
-
-
     {% else %}
-    <button onclick="location.href='{%url 'signup'%}'"> Signup</button>
-    <button onclick="location.href='{%url 'login'%}'"> Login</button>
+    <div class="" style="text-align: center; color:white">
+        <h2>Welcome to sharedClipboard</h2>
+        <button onclick="location.href='{%url 'signup'%}'"> Signup</button>
+        <button onclick="location.href='{%url 'login'%}'"> Login</button>
+    </div>
     {%endif%}
-    </body>
+</body>
+
 </html>
 {% endblock content %}

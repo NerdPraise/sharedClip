@@ -29,25 +29,28 @@ def get_uid(request):
 
 def index(request):
     if auth.current_user:
-        user = auth.current_user
-        uid, id_token = get_uid(request)
-        path = db.child("users").child(uid)
-        name = path.child("name").get().val()
-        uuidstamps = db.child("users").child(uid).child("saved clips").shallow().get().val()
-        list_uuid = list(uuidstamps)
-        # obj = [path.child("users").child(uid).child("saved clips").child(uuid).shallow().get().val() for uuid in list_uuid]
-        # for i in obj:
-        #     print(i)
-        #check if object can be stored in local storage, then compared if there is any new change 
-        unix_time = []
-        content = []
-        for clip_id in list_uuid:
-            unix_time.append(db.child("users").child(uid).child("saved clips").child(clip_id).child("unix time").get(id_token).val())
-            content.append(db.child("users").child(uid).child("saved clips").child(clip_id).child("content").get(id_token).val())
-        date = [datetime.fromtimestamp(time).strftime("%H:%M %d-%m-%y") for time in unix_time]
-        comb_list = list(zip(date, content))
-        context = {"name": name, "profile": user, "content":comb_list}
-        return render(request, "main/index.html", context)
+        try:
+            user = auth.current_user
+            uid, id_token = get_uid(request)
+            path = db.child("users").child(uid)
+            name = path.child("name").get().val()
+            uuidstamps = db.child("users").child(uid).child("saved clips").shallow().get().val()
+            list_uuid = list(uuidstamps)
+            # obj = [path.child("users").child(uid).child("saved clips").child(uuid).shallow().get().val() for uuid in list_uuid]
+            # for i in obj:
+            #     print(i)
+            #check if object can be stored in local storage, then compared if there is any new change 
+            unix_time = []
+            content = []
+            for clip_id in list_uuid[:5]:
+                unix_time.append(db.child("users").child(uid).child("saved clips").child(clip_id).child("unix time").get(id_token).val())
+                content.append(db.child("users").child(uid).child("saved clips").child(clip_id).child("content").get(id_token).val())
+            date = [datetime.fromtimestamp(time).strftime("%H:%M %d-%m-%y") for time in unix_time]
+            comb_list = list(zip(date, content))
+            context = {"name": name, "profile": user, "content":comb_list}
+            return render(request, "main/index.html", context)
+        except (ConnectionAbortedError, ConnectionError):
+            return redirect("/404.html")
     else:
         return render(request, "main/index.html")
 
@@ -82,17 +85,22 @@ def signup(request):
     if request.POST:       
         name = request.POST.get("name")
         email = request.POST.get("email")
-        password = request.POST.get("password")
-        try:
-            user = auth.create_user_with_email_and_password(email, password)
-            uid = user["localId"]
-            data = {"name": name, "email": email}
-            db.child("users").child(uid).set(data)
-            auth.sign_in_with_email_and_password(email, password)
-            return redirect("/")
-        except:
-            error = "Something wrong just went wrong "
-            return render(request, "registration/signup.html", {"error": error})
+        password = request.POST.get("password1")
+        password2 = request.POST.get("password2")
+        if password==password2: 
+            try:
+                user = auth.create_user_with_email_and_password(email, password)
+                uid = user["localId"]
+                data = {"name": name, "email": email}
+                db.child("users").child(uid).set(data)
+                auth.sign_in_with_email_and_password(email, password)
+                return redirect("/")
+            except:
+                error = "Something wrong just went wrong "
+        else:
+            error = "Passwords are not alike"
+        return render(request, "registration/signup.html", {"error": error})
+
     else:
         return render(request, "registration/signup.html")
 
