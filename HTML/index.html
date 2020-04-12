@@ -1,0 +1,41 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div style="text-align: center; color:white">
+            <h2>sharedClip</h2>
+        </div>
+        <div class="data">
+            <div>
+                <h2 style="text-align: center;">Some words, Useful later </h2>
+            </div>
+            <div class="indo">
+                <span class="clipscontn">
+                    <ul>
+                        <li id="1" onclick=clicked(id)>Date and clips</li>
+                        <li id="3" onclick=clicked(id)>Date and clips</li>
+                    </ul>
+                </span>
+                <form>
+                <span class="textcontn">
+                    
+                    <textarea rows="" id="name" cols="" name="text"></textarea>
+                </span>
+                <span class="btncontn">
+                    <button class="btn" onclick=""> Save </button>
+                </span>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    function clicked(id) {
+        let word = document.getElementById(id).innerHTML
+        document.getElementById("name").innerHTML = word
+        
+    }
+</script>

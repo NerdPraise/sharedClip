@@ -4,3 +4,4 @@ textsharing/__pycache__
 textsharing/migrations/__pycache__
 recovery/
 Procfile
+cred.json

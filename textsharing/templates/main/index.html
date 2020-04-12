@@ -9,10 +9,10 @@
 </head>
 
 <body>
-    {% if profile%}
-    <div class="container">
+    {% if profile %}
+    <!-- <div class="container">
         <div class="siteimage img-container textandstuff">
-            <!-- <img alt="sharedClipboard" width="200px" src="{% static 'images/sharedclip.png' %}"> -->
+            <img alt="sharedClipboard" width="200px" src="{% static 'images/sharedclip.png' %}">
             <h2 style="margin-top:-23px; font-size: 22px;">sharedClip</h2>
         </div>
         <div class="form-container">
@@ -22,7 +22,7 @@
             <div>
                 <form action="create" method="POST">
                     {%csrf_token%}
-                    <textarea rows="10" cols="50" placeholder="{ Enter clip }"></textarea>
+                    <textarea rows="10" name="clip" cols="50" placeholder="{ Enter clip }"></textarea>
                     <button class="button" type="submit">SAVE</button>
                 </form>
                 <ul class="clips">
@@ -30,6 +30,35 @@
                     <li>{{date}}: {{clip}} </li>
                     {%endfor%}
                 </ul>
+            </div>
+        </div>
+    </div> -->
+    <div class="container">
+        <div style="text-align: center; color:white">
+            <h2>sharedClip</h2>
+        </div>
+        <div class="data">
+            <div>
+                <h2 style="text-align: center;">Some words, Useful later </h2>
+            </div>
+            <div class="indo">
+                <span class="clipscontn">
+                    <ul>
+                        <li id="1" onclick=clicked(id)>Date and clips</li>
+                        {%for date, clip in content%}
+                        <li id="{{forloop.counter}}" onclick=clicked(id)>{{date}}: {{clip}} </li>
+                        {%endfor%}
+                    </ul>
+                </span>
+                <form action="create" method="POST">
+                    <span class="textcontn">
+                        {% csrf_token %}
+                        <textarea rows="" id="name" cols="" name="clip"></textarea>
+                    </span>
+                    <span class="btncontn">
+                        <button class="btn" onclick=""> Save </button>
+                    </span>
+                </form>
             </div>
         </div>
     </div>
@@ -42,6 +71,13 @@
     </div>
     {%endif%}
 </body>
+
+<script>
+    function clicked(id) {
+        let word = document.getElementById(id).innerHTML
+        document.getElementById("name").innerHTML = word
+    }
+</script>
 
 </html>
 {% endblock content %}

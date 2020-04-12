@@ -15,6 +15,7 @@ config = {
     "messagingSenderId": "151654450292",
     "appId": "1:151654450292:web:8007db457c2b17f8573d21",
     "measurementId": "G-QM9K6T6K8Y",
+    
     }
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
@@ -33,20 +34,29 @@ def index(request):
             user = auth.current_user
             uid, id_token = get_uid(request)
             path = db.child("users").child(uid)
-            name = path.child("name").get().val()
-            uuidstamps = db.child("users").child(uid).child("saved clips").shallow().get().val()
-            list_uuid = list(uuidstamps)
-            # obj = [path.child("users").child(uid).child("saved clips").child(uuid).shallow().get().val() for uuid in list_uuid]
-            # for i in obj:
-            #     print(i)
-            #check if object can be stored in local storage, then compared if there is any new change 
-            unix_time = []
-            content = []
-            for clip_id in list_uuid[:5]:
-                unix_time.append(db.child("users").child(uid).child("saved clips").child(clip_id).child("unix time").get(id_token).val())
-                content.append(db.child("users").child(uid).child("saved clips").child(clip_id).child("content").get(id_token).val())
-            date = [datetime.fromtimestamp(time).strftime("%H:%M %d-%m-%y") for time in unix_time]
-            comb_list = list(zip(date, content))
+            name = path.child("name").get(id_token).val()
+            uuidstamps = db.child("users").child(uid).child("saved clips").shallow().get(id_token).val()
+            if uuidstamps:
+                list_uuid = list(uuidstamps)
+                # obj = [path.child("users").child(uid).child("saved clips").child(uuid).shallow().get().val() for uuid in list_uuid]
+                # for i in obj:
+                #     print(i)
+
+                """
+                check if object can be stored in local storage, then compared if there is any new change 
+                check if obj is stored and compare the obj
+                """
+                unix_time = []
+                content = []
+                for clip_id in list_uuid[:5]:
+                    unix_time.append(db.child("users").child(uid).child("saved clips").child(clip_id).child("unix time").get(id_token).val())
+                    content.append(db.child("users").child(uid).child("saved clips").child(clip_id).child("content").get(id_token).val())
+                print(content, unix_time)
+                date = [datetime.fromtimestamp(time).strftime("%H:%M %d-%m-%y") for time in unix_time]
+                comb_list = list(zip(date, content)) 
+                
+            else:
+                comb_list = ""
             context = {"name": name, "profile": user, "content":comb_list}
             return render(request, "main/index.html", context)
         except (ConnectionAbortedError, ConnectionError):
@@ -64,8 +74,10 @@ def postsign(request):
     password = request.POST.get("password")
     try:
         user = auth.sign_in_with_email_and_password(email, password)
-    except:
-        message = "invalid credentials"
+    except (ConnectionAbortedError, ConnectionError):
+        return redirect("/404.html")
+    except Exception as e:
+        message = "invalid credentials" + str(e)
         return render(request, "registration/signin.html", {"message": message})
     session_id = user["idToken"]
     request.session["uid"] = str(session_id)
@@ -90,13 +102,20 @@ def signup(request):
         if password==password2: 
             try:
                 user = auth.create_user_with_email_and_password(email, password)
-                uid = user["localId"]
+                uid = str(user["localId"])
                 data = {"name": name, "email": email}
-                db.child("users").child(uid).set(data)
+                print(uid)
+                db.child("users").child(uid).set(data, user["idToken"])
+                
+                """
+                key error for uid, check today // INTEGRATE GOOGLE LOGIN
+                """
+                request.session["uid"] = str(user["idToken"])
                 auth.sign_in_with_email_and_password(email, password)
                 return redirect("/")
-            except:
-                error = "Something wrong just went wrong "
+            except Exception as e:
+                error = "Something wrong went wrong. It couldn't go wronger"
+                print(e)
         else:
             error = "Passwords are not alike"
         return render(request, "registration/signup.html", {"error": error})
@@ -113,7 +132,7 @@ def createClip(request):
         time_now = datetime.now(timezone.utc).astimezone(tz)
         UUID = str(uuid.uuid4())        
         millis = int(time.mktime(time_now.timetuple()))
-        clip = request.POST["clip"]
+        clip = request.POST.get("clip")
         uid, id_token = get_uid(request)
         try:
             data = {
