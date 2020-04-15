@@ -44,7 +44,6 @@
             <div class="indo">
                 <span class="clipscontn">
                     <ul>
-                        <li id="1" onclick=clicked(id)>Date and clips</li>
                         {%for date, clip in content%}
                         <li id="{{forloop.counter}}" onclick=clicked(id)>{{date}}: {{clip}} </li>
                         {%endfor%}
@@ -56,13 +55,13 @@
                         <textarea rows="" id="name" cols="" name="clip"></textarea>
                     </span>
                     <span class="btncontn">
-                        <button class="btn" onclick=""> Save </button>
+                        <button class="btn" type="submit"> Save </button>
                     </span>
                 </form>
             </div>
         </div>
     </div>
-    <button onclick="location.href='{%url 'logout'%}'"> Logout</button>
+    <button class="btn" onclick="location.href='{%url 'logout'%}'"> Logout</button>
     {% else %}
     <div class="" style="text-align: center; color:white">
         <h2>Welcome to sharedClipboard</h2>
@@ -75,7 +74,8 @@
 <script>
     function clicked(id) {
         let word = document.getElementById(id).innerHTML
-        document.getElementById("name").innerHTML = word
+        word = word.split(": ")  
+        document.getElementById("name").innerHTML = word[1]
     }
 </script>
 

@@ -14,27 +14,31 @@
             <div class="indo">
                 <span class="clipscontn">
                     <ul>
-                        <li id="1" onclick=clicked(id)>Date and clips</li>
+                        <li id="1" onclick=clicked(id)>12: Date and clips</li>
                         <li id="3" onclick=clicked(id)>Date and clips</li>
                     </ul>
                 </span>
                 <form>
-                <span class="textcontn">
-                    
+                <span class="textcontn">     
                     <textarea rows="" id="name" cols="" name="text"></textarea>
                 </span>
                 <span class="btncontn">
-                    <button class="btn" onclick=""> Save </button>
-                </span>
+                    <button type="submit" class="btn"> Save </button>
                 </form>
+                
+                </span>
+                
             </div>
         </div>
     </div>
+    <button class="btn" onclick=alert("Pe")> Save </button>
 </body>
 
 <script>
     function clicked(id) {
         let word = document.getElementById(id).innerHTML
+        word = word.split(": ")
+        alert(word[1])
         document.getElementById("name").innerHTML = word
         
     }

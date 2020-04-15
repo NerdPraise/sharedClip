@@ -25,7 +25,7 @@ SECRET_KEY = '_mf+t&mcp9&g30mfcnmf*t@e3!+$&$e-qle#hzh1w&gr8ifehf'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "sharedclip.herokuapp.com"]
 
 
 # Application definition

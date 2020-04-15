@@ -51,9 +51,9 @@ def index(request):
                 for clip_id in list_uuid[:5]:
                     unix_time.append(db.child("users").child(uid).child("saved clips").child(clip_id).child("unix time").get(id_token).val())
                     content.append(db.child("users").child(uid).child("saved clips").child(clip_id).child("content").get(id_token).val())
-                print(content, unix_time)
                 date = [datetime.fromtimestamp(time).strftime("%H:%M %d-%m-%y") for time in unix_time]
                 comb_list = list(zip(date, content)) 
+                comb_list.sort(reverse=True, key=lambda comb: comb[0])
                 
             else:
                 comb_list = ""
@@ -104,7 +104,6 @@ def signup(request):
                 user = auth.create_user_with_email_and_password(email, password)
                 uid = str(user["localId"])
                 data = {"name": name, "email": email}
-                print(uid)
                 db.child("users").child(uid).set(data, user["idToken"])
                 
                 """
