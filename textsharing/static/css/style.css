@@ -22,6 +22,7 @@ body {
     background-color: white;
     clear: both;
     max-width: 1000px;
+    border-radius: 10px;
 }
 
 textarea {
