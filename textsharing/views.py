@@ -48,10 +48,10 @@ def index(request):
                 """
                 unix_time = []
                 content = []
-                for clip_id in list_uuid[:5]:
+                for clip_id in list_uuid:
                     unix_time.append(db.child("users").child(uid).child("saved clips").child(clip_id).child("unix time").get(id_token).val())
                     content.append(db.child("users").child(uid).child("saved clips").child(clip_id).child("content").get(id_token).val())
-                date = [datetime.fromtimestamp(time).strftime("%H:%M %d-%m-%y") for time in unix_time]
+                date = [datetime.fromtimestamp(time).strftime("%H:%M %d/%m") for time in unix_time]
                 comb_list = list(zip(date, content)) 
                 comb_list.sort(reverse=True, key=lambda comb: comb[0])
                 

@@ -32,7 +32,8 @@ textarea {
 .clipscontn, .btncontn{
     width: 25%;
     float:left;
-    overflow: visible;
+    overflow: auto;
+    max-height: 500px;
     
 }
 

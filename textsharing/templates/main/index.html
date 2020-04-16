@@ -42,13 +42,15 @@
                 <h2 style="text-align: center;">Some words, Useful later </h2>
             </div>
             <div class="indo">
-                <span class="clipscontn">
+                <div class="clipscontn">
+                    <p> DATE AND CLIPS</p>
+                    <hr>
                     <ul>
                         {%for date, clip in content%}
                         <li id="{{forloop.counter}}" onclick=clicked(id)>{{date}}: {{clip}} </li>
                         {%endfor%}
                     </ul>
-                </span>
+                </div>
                 <form action="create" method="POST">
                     <span class="textcontn">
                         {% csrf_token %}
