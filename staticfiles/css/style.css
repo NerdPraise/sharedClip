@@ -1,0 +1,79 @@
+@font-face {
+    font-family: "U8-Regular";
+    src:url("../fonts/U8Trial-Regular.ttf")
+}
+
+@font-face {
+    font-family: "U8-Medium";
+    src:url("../fonts/U8Trial-Medium.ttf")
+}
+
+
+body {
+    background-color: #575757;
+    font-family: "U8-Regular";
+}
+
+.data {
+    margin: 50px auto auto;
+    max-height: 500px;
+    overflow: hidden;
+    height:500px;
+    background-color: white;
+    clear: both;
+    max-width: 1000px;
+    border-radius: 10px;
+}
+
+textarea {
+    height: 450px;
+    width: 100%;
+}
+.clipscontn, .btncontn{
+    width: 25%;
+    float:left;
+    overflow: auto;
+    max-height: 500px;
+    
+}
+
+.indo{
+    border: 1px solid #ccc  ;
+}
+
+.textcontn {
+    width: 50%;
+    float: left;
+    
+}
+
+ul {
+    margin:0;
+    padding:0;
+}
+
+li {
+    padding: 25px;
+    list-style: none;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+
+.btn{
+    display:block;
+    margin:15px auto;
+    padding: 1.25rem 30px ;
+    border: 1px solid blue;
+    color: white;
+    background-color: rgb(8, 62, 158);
+    cursor: pointer;
+    font-family: "U8-medium";
+    width: 50%;
+    border-radius: 5px;
+}
+
+.btn:hover{
+    background-color: white;
+    color:blue;
+    transition: ease 0.7s;
+}

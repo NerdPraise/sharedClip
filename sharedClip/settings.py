@@ -20,10 +20,13 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '_mf+t&mcp9&g30mfcnmf*t@e3!+$&$e-qle#hzh1w&gr8ifehf'
+# SECRET_KEY = '_mf+t&mcp9&g30mfcnmf*t@e3!+$&$e-qle#hzh1w&gr8ifehf'
+
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&k3q+pmu)5%asj6yjpkag')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = ["localhost", "sharedclip.herokuapp.com"]
 
@@ -51,6 +54,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'sharedClip.urls'
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 TEMPLATES = [
     {
@@ -120,3 +126,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 django_heroku.settings(locals())
+
