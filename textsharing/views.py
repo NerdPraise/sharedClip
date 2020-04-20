@@ -76,8 +76,8 @@ def postsign(request):
         user = auth.sign_in_with_email_and_password(email, password)
     except (ConnectionAbortedError, ConnectionError):
         return redirect("/404.html")
-    except Exception as e:
-        message = "invalid credentials" + str(e)
+    except:
+        message = "invalid credentials" 
         return render(request, "registration/signin.html", {"message": message})
     session_id = user["idToken"]
     request.session["uid"] = str(session_id)
@@ -112,9 +112,9 @@ def signup(request):
                 request.session["uid"] = str(user["idToken"])
                 auth.sign_in_with_email_and_password(email, password)
                 return redirect("/")
-            except Exception as e:
+            except:
                 error = "Something wrong went wrong. It couldn't go wronger"
-                print(e)
+                
         else:
             error = "Passwords are not alike"
         return render(request, "registration/signup.html", {"error": error})
