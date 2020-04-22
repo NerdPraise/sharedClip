@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth as ath
+from django.contrib.auth.views import logout_then_login
 from datetime import datetime, timezone
 import pytz
 import pyrebase
@@ -91,6 +92,7 @@ def logout(request):
     except KeyError:
         pass
     return redirect("/")
+    # return logout_then_login(request)
 
 
 def signup(request):
